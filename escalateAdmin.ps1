@@ -1,8 +1,13 @@
-$LoggedInUser = Get-WMIObject -class Win32_ComputerSystem | select username
+$LoggedInUser = = Get-WmiObject -Class Win32_NetworkLoginProfile | 
+Sort-Object -Property LastLogon -Descending | 
+Select-Object -Property * -First 1 | 
+Where-Object {$_.LastLogon -match "(\d{14})"} | 
+Foreach-Object { New-Object PSObject -Property @{ Name=$_.Name;LastLogon=[datetime]::ParseExact($matches[0], "yyyyMMddHHmmss", $null)}} |
+select name
 
-$ObjDomain = $LoggedInUser.username.Split("\")[0]
+$ObjDomain = $LoggedInUser.name.Split("\")[0]
 
-$ObjName = $LoggedInUser.username.Split("\")[1]
+$ObjName = $LoggedInUser.name.Split("\")[1]
 
 $group = [ADSI]"WinNT://$($env:COMPUTERNAME)/Administrators"
 
