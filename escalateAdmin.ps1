@@ -1,4 +1,4 @@
-$LoggedInUser = = Get-WmiObject -Class Win32_NetworkLoginProfile | 
+$LoggedInUser = Get-WmiObject -Class Win32_NetworkLoginProfile | 
 Sort-Object -Property LastLogon -Descending | 
 Select-Object -Property * -First 1 | 
 Where-Object {$_.LastLogon -match "(\d{14})"} | 
