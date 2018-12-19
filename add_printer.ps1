@@ -1,8 +1,8 @@
-$printer_ip = "10.122.160.7"
+$printer_ip = "10.10.10.10"
 $portName = "TCPPort:$printer_ip"
 $printDriverName = "PCL6 Driver for Universal Print"
 
-pnputil.exe /a /i "C:\Program Files (x86)\AirWatch\Warby\Assets\RicohUniversal\oemsetup.inf"
+pnputil.exe /add-driver "C:\path\to\oemsetup.inf" /install
  
 $portExists = Get-Printerport -Name $portname -ErrorAction SilentlyContinue
  
